@@ -5,10 +5,13 @@ interface IResume {
 }
 
 export function Resume({totalInvested, totalAnnualInterestEarned, total}: IResume) {
+    const initValue = Number(totalInvested).toLocaleString("pt-br", { style: "currency", currency: "BRL" });
+    const earned = Number(totalAnnualInterestEarned).toLocaleString("pt-br", { style: "currency", currency: "BRL" });
+    const totalValue = Number(total).toLocaleString("pt-br", { style: "currency", currency: "BRL" });
     const stats = [
-        { id: 1, name: 'Total investido', value: `R$ ${Number(totalInvested).toFixed(2).replace('.', ',')}`},
-        { id: 2, name: 'Total ganho em juros R$', value: `R$ ${Number(totalAnnualInterestEarned).toFixed(2).replace('.', ',')}`},
-        { id: 3, name: 'Total R$', value: `R$ ${Number(total).toFixed(2).replace('.', ',')}`},
+        { id: 1, name: 'Total investido', value: initValue},
+        { id: 2, name: 'Total ganho em juros', value: earned},
+        { id: 3, name: 'Total', value: totalValue},
     ];
 
     return (
