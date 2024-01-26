@@ -11,7 +11,7 @@ export function Resume({totalInvested, totalAnnualInterestEarned, total}: IResum
     const stats = [
         { id: 1, name: 'Total investido', value: initValue},
         { id: 2, name: 'Total ganho em juros', value: earned},
-        { id: 3, name: 'Total', value: totalValue},
+        { id: 3, name: 'Soma total', value: totalValue},
     ];
 
     return (
