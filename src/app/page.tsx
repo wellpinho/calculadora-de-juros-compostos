@@ -1,13 +1,50 @@
 'use client'
 import { useState } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { Switch } from '@headlessui/react'
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Resume } from './resume';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
+
+type Inputs = {
+  initialValue: number
+  valueMonth: number
+  currency: string
+  period: string
+  time: number
+  fee: string
+}
+
 export default function Home() {
-  const [agreed, setAgreed] = useState(false)
+  const [resume, setResume] = useState(false);
+  const [initiValue, setInitValue] = useState(0);
+  const [earned, setEarned] = useState(0);
+  const [total, setTotal] = useState(0);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>()
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const fee = Number(data.fee) / 100;
+  const total = data.initialValue * (1 + fee) ** data.time;
+  const totalGain = total - data.initialValue;
+
+    const response = {
+      totalInvested: data.initialValue,
+      totalAnnualInterestEarned: totalGain,
+      total
+    }
+
+    setInitValue(response.totalInvested);
+    setEarned(response.totalAnnualInterestEarned);
+    setTotal(response.total);
+
+    setResume(!resume);
+    return response;
+  }
 
   return (
     <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8 h-screen">
@@ -25,13 +62,14 @@ export default function Home() {
       </div>
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Calculadora de juros compostos
+          Juros compostos
         </h2>
         <p className="mt-2 text-lg leading-8 text-gray-600">
-          Com a calculadora de juros compostos gratuita, você fica por dentro do valor que poderá receber com juros ao fazer um investimento com aporte mensal por um determinado período e com uma taxa definida.
+          Calculadora de juros compostos gratuita, você fica por dentro do valor que poderá receber com juros ao fazer um investimento com aporte mensal por um determinado período e com uma taxa definida.
         </p>
       </div>
-      <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+
+      <form className="mx-auto mt-16 max-w-xl sm:mt-20" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div>
             <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
@@ -40,15 +78,12 @@ export default function Home() {
             <div className="relative mt-2 rounded-md shadow-sm">
               <input
                 type="number"
-                name="initialValue"
-                id="price"
                 className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 placeholder="R$ 0,00"
+                {...register('initialValue')}
               />
             </div>
           </div>
-
-
           <div>
             <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
               Valor mensal
@@ -56,37 +91,33 @@ export default function Home() {
             <div className="relative mt-2 rounded-md shadow-sm">
               <input
                 type="number"
-                name="valueMonth"
-                id="price"
                 className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 placeholder="R$ 0,00"
+                {...register('valueMonth')}
               />
             </div>
           </div>
-
           <div>
             <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
               Taxa de juros
             </label>
             <div className="relative mt-2 rounded-md shadow-sm">
               <input
-                type="number"
-                name="fee"
-                id="price"
+                type="text"
                 className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 placeholder="0.00"
+                {...register('fee')}
               />
               <div className="absolute inset-y-0 right-0 flex items-center">
                 <label htmlFor="currency" className="sr-only">
-                  % Mensal
+                  Mensal
                 </label>
                 <select
-                  id="currency"
-                  name="currency"
                   className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+                  {...register('currency')}
                 >
-                  <option>% Mensal</option>
-                  <option>% Anual</option>
+                  <option>Mensal</option>
+                  <option>Anual</option>
                 </select>
               </div>
             </div>
@@ -98,18 +129,16 @@ export default function Home() {
             <div className="relative mt-2 rounded-md shadow-sm">
               <input
                 type="text"
-                name="time"
-                id="price"
                 className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 placeholder="0"
+                {...register('time')}
               />
               <div className="absolute inset-y-0 right-0 flex items-center">
                 <select
-                  id="currency"
-                  name="currency"
                   className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+                  {...register('period')}
                 >
-                  <option>Menses</option>
+                  <option>Meses</option>
                   <option>Anos</option>
                 </select>
               </div>
@@ -124,7 +153,9 @@ export default function Home() {
             Calcular
           </button>
         </div>
+
       </form>
+        {resume && <Resume total={total} totalAnnualInterestEarned={earned} totalInvested={initiValue} />}
     </div>
   );
 }
