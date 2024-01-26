@@ -17,7 +17,6 @@ type Inputs = {
 }
 
 export default function Home() {
-  const [resume, setResume] = useState(false);
   const [initiValue, setInitValue] = useState(0);
   const [earned, setEarned] = useState(0);
   const [total, setTotal] = useState(0);
@@ -42,7 +41,6 @@ export default function Home() {
     setEarned(response.totalAnnualInterestEarned);
     setTotal(response.total);
 
-    setResume(!resume);
     return response;
   }
 
@@ -99,7 +97,7 @@ export default function Home() {
           </div>
           <div>
             <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
-              Taxa de juros
+              Taxa de juros anual
             </label>
             <div className="relative mt-2 rounded-md shadow-sm">
               <input
@@ -108,23 +106,11 @@ export default function Home() {
                 placeholder="0.00"
                 {...register('fee')}
               />
-              <div className="absolute inset-y-0 right-0 flex items-center">
-                <label htmlFor="currency" className="sr-only">
-                  Mensal
-                </label>
-                <select
-                  className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-                  {...register('currency')}
-                >
-                  <option>Mensal</option>
-                  <option>Anual</option>
-                </select>
-              </div>
             </div>
           </div>
           <div>
             <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
-              Período em
+              Período em anos
             </label>
             <div className="relative mt-2 rounded-md shadow-sm">
               <input
@@ -133,15 +119,6 @@ export default function Home() {
                 placeholder="0"
                 {...register('time')}
               />
-              <div className="absolute inset-y-0 right-0 flex items-center">
-                <select
-                  className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-                  {...register('period')}
-                >
-                  <option>Meses</option>
-                  <option>Anos</option>
-                </select>
-              </div>
             </div>
           </div>
         </div>
@@ -153,9 +130,12 @@ export default function Home() {
             Calcular
           </button>
         </div>
-
       </form>
-        {resume && <Resume total={total} totalAnnualInterestEarned={earned} totalInvested={initiValue} />}
+      <Resume 
+        total={total} 
+        totalAnnualInterestEarned={earned} 
+        totalInvested={initiValue} 
+      />
     </div>
   );
 }
