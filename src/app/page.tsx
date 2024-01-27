@@ -28,11 +28,21 @@ export default function Home() {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
   const fee = Number(data.fee) / 100;
-  const total = data.initialValue * (1 + fee) ** data.time;
-  const totalGain = total - data.initialValue;
+  let amount = Number(data.initialValue);
+  let counter = Number(data.time) * 12;
+
+  if (data.valueMonth) {
+    while(counter > 0) {
+      amount += Number(data.valueMonth);
+      counter--;
+    }
+  }
+
+  const total = amount * (1 + fee) ** data.time;
+  const totalGain = total - amount;
 
     const response = {
-      totalInvested: data.initialValue,
+      totalInvested: amount,
       totalAnnualInterestEarned: totalGain,
       total
     }
@@ -45,7 +55,7 @@ export default function Home() {
   }
 
   return (
-    <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8 h-screen">
+    <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8 h-full">
       <div
         className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
         aria-hidden="true"
