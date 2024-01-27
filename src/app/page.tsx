@@ -78,21 +78,51 @@ export default function Home() {
       </div>
 
       <form className="mx-auto mt-16 max-w-xl sm:mt-20" onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-          <div>
-            <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
-              Valor inicial
-            </label>
-            <div className="relative mt-2 rounded-md shadow-sm">
-              <input
-                type="text"
-                className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="R$ 0,00"
-                {...register('initialValue')}
-              />
+        <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-1">
+          <div className='flex gap-1'>
+            <div>
+              <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
+                Valor inicial
+              </label>
+              <div className="relative mt-2 rounded-md shadow-sm">
+                <input
+                  type="text"
+                  className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  placeholder="R$ 0,00"
+                  {...register('initialValue')}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
+                Taxa de juros anual
+              </label>
+              <div className="relative mt-2 rounded-md shadow-sm">
+                <input
+                  type="text"
+                  className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  placeholder="0.00"
+                  {...register('fee')}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
+                Período em anos
+              </label>
+              <div className="relative mt-2 rounded-md shadow-sm">
+                <input
+                  type="text"
+                  className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  placeholder="0"
+                  {...register('time')}
+                />
+              </div>
             </div>
           </div>
-          <div>
+          {/* <div>
             <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
               Valor mensal
             </label>
@@ -104,8 +134,8 @@ export default function Home() {
                 {...register('valueMonth')}
               />
             </div>
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
               Taxa de juros anual
             </label>
@@ -117,8 +147,8 @@ export default function Home() {
                 {...register('fee')}
               />
             </div>
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
               Período em anos
             </label>
@@ -130,7 +160,7 @@ export default function Home() {
                 {...register('time')}
               />
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="mt-10">
           <button
