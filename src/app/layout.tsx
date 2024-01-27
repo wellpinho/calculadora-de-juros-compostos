@@ -6,6 +6,9 @@ import Head from "next/head";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  verification: {
+    google: 'google'
+  },
   title: "Juros compostos",
   description: "Calcule o quanto pode ganhar com juros compostos",
 };
@@ -18,10 +21,10 @@ export default function RootLayout({
   return (
     <>
     <html lang="en">
-      <Head>
+      <head>
         <meta name="google-adsense-account" content="ca-pub-5560319928636009" />
         <link rel="icon" href="/icon.svg" />
-      </Head>
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
     </>
